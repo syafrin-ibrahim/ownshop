@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Sep 2020 pada 22.31
+-- Waktu pembuatan: 15 Sep 2020 pada 06.50
 -- Versi server: 10.4.13-MariaDB
 -- Versi PHP: 7.4.7
 
@@ -98,7 +98,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `username`, `roles`, `address`, `phone`, `avatar`, `status`) VALUES
-(1, 'syafrin ibrahim', 'syafrinibrahim12@gmail.com', NULL, '$2y$10$tP8B0oRN5wzegviCueOP6OFXH69QCGt.YT.NIjJOANYK5J1sjnh9q', NULL, '2020-09-14 02:49:14', '2020-09-14 02:49:14', 'syafrin12', '[\"ADMIN\"]', 'jl panjaitan', '082197215585', 'pakatuan12.png', 'ACTIVE');
+(1, 'syafrin ibrahim', 'syafrinibrahim12@gmail.com', NULL, '$2y$10$tP8B0oRN5wzegviCueOP6OFXH69QCGt.YT.NIjJOANYK5J1sjnh9q', NULL, '2020-09-14 02:49:14', '2020-09-14 02:49:14', 'syafrin12', '[\"ADMIN\"]', 'jl panjaitan', '082197215585', 'pakatuan12.png', 'ACTIVE'),
+(3, 'ahmad subardjo', 'ahmad@gmail.com', NULL, '$2y$10$f9gIazxGUdHDCZa7chYkpuvkRZHVT80ep4S1RwFiXfWFX2pAEW/pa', NULL, '2020-09-15 11:34:35', '2020-09-15 11:34:35', 'ahmad', '[\"ADMIN\"]', 'lumajang', '0821345667', 'assets/avatar/OQFL16WIeO3jL3N92uViIXCNhvSfcSdLzfycSi7i.jpeg', 'ACTIVE');
 
 --
 -- Indexes for dumped tables
@@ -150,7 +151,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
