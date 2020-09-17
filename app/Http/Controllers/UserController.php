@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+
 class UserController extends Controller
 {
     /**
@@ -15,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::where('username','ahmad')->get();
+        $user = User::paginate(10);
         return view('pages.user.index', compact('user'));
     }
 
@@ -68,7 +70,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('pages.user.edit', compact('user'));
     }
 
     /**
@@ -80,7 +83,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $data = $request->all();
+        $data['roles'] = json_encode($request->roles);
+     
+        if($request->file('avatar')){
+            if($user->avatar && file_exists(storage_path('app/public/'. $user->avatar))){
+                Storage::delete('public/'.$user->avatar);                
+            }
+            $data['avatar'] = $request->file('avatar')->store('assets/avatar','public');
+        }
+       
+        
+        $user->update($data);
+        return redirect()->route('user.index')->with('status','data berhasil diubah');
+
     }
 
     /**
@@ -91,6 +108,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        
+         if($user->avatar && file_exists(storage_path('app/public/'. $user->avatar))){
+                Storage::delete('public/'.$user->avatar);                
+            }
+        
+        
+         $user->delete();
+        return redirect()->route('user.index')->with('status','data berhasil dihapus');
     }
 }
