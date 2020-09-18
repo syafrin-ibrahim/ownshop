@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 class CategoryController extends Controller
 {
@@ -14,10 +15,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-          $categ = Category::paginate(10);
+        $categ = Category::paginate(10);
+        if($request->key){
 
+        }
         return view('pages.category.index', compact('categ'));
     }
 
@@ -69,7 +72,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categ = Category::findOrFail($id);
+        return view('pages.category.edit', compact('categ'));
     }
 
     /**
@@ -81,7 +85,21 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
+        $categ =  Category::findOrFail($id);
+      
+        $data =  $request->all();
+        $data['slug'] = Str::slug($request->name,'-');
+        if($request->file('image')){
+                if($categ->image && file_exists(storage_path('app/public/'.$categ->image))){
+                    Storage::delete('public/'.$categ->image);
+                    // Storage::delete('public/'.$user->avatar); 
+                }
+            $data['image'] = $request->file('image')->store('category', 'public');
+        }
+        $categ->update($data);
+        return redirect()->route('category.index')->with('status','data berhasil diubah');
+
     }
 
     /**
@@ -92,6 +110,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categ = Category::findOrFail($id);
+        
+         if($categ->image && file_exists(storage_path('app/public/'. $categ->image))){
+                Storage::delete('public/'.$categ->image);                
+            }
+        
+        
+         $categ->delete();
+        return redirect()->route('category.index')->with('status','data berhasil dihapus');
     }
 }
