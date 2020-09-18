@@ -15,10 +15,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $user = User::paginate(10);
+        if($request->get('key')){
+            $user = User::where('email', 'LIKE','%$request->key%')->paginate(10);
+            
+        }
         return view('pages.user.index', compact('user'));
+
     }
 
     /**
