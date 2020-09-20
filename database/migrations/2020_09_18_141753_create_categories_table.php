@@ -16,16 +16,14 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string("slug")->unique();
-            $table->string("image")->comment("berisi nama file image saja
-            tanpa path");
+            $table->string("slug")->unique();         
+            $table->string("image");
             $table->integer("created_by");
-            $table->integer("updated_by")->nullable();
-            $table->integer("deleted_by")->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
+
+  
 
     /**
      * Reverse the migrations.

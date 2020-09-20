@@ -10,4 +10,8 @@ class Category extends Model
        'name', 'slug', 'image','created_by'
     ];
 
+      public function book(){
+        return $this->hasMany("App\Book");
+    }
+
 }
