@@ -4,26 +4,28 @@
 @endsection
 @section('content')
      <div class="col-md-8">
-         @if (count($errors) > 0 )
-             @foreach ($errors->all() as $error)
-              {{ $error }} 
-              @endforeach
-         @endif 
         <form action="{{ route('book.update', $book->id) }}" class="bg-white shadow-sm p-3" method="post" enctype="multipart/form-data">
             @csrf
             @method("PUT")
-           <label for="title">Title</label> <br>
-            <input type="text" class="form-control" name="title" value="{{ $book->title }}">
+            <label for="title">Title</label> <br>
+            <input type="text" class="form-control {{ $errors->first('title') ? 'is-invalid' : ''}}" value="{{ old('title') ? old('title') : $book->title }}" name="title" placeholder="Book title">
+            <div class="invalid-feedback">
+                {{ $errors->first('title') }}
+            </div>
             <br>
             <label for="cover">Ganti Cover</label><br>
             <img src="{{ asset(Storage::url($book->cover)) }}" alt="no image" width="200" height="150"><br><br>
-            <input type="file" class="form-control" name="cover" value="{{ $book->cover }}">
+            <input type="file" class="form-control {{ $errors->first('cover') ? 'is-invalid' : ''}}" name="cover" value="{{ $book->cover }}">
+            <div class="invalid-feedback">
+                {{ $errors->first('cover') }}
+            </div>
             <small class="text-muted">
                kosongkan jika tidak ingin mengganti cover
            </small>
+
             <br>
             <label for="category">category</label>
-            <select name="category_id" class="form-control">
+            <select name="category_id" class="form-control {{ $errors->first('category_id') ? 'is-invalid' : ''}}">
                 <option value="">Category Book</option>
                 @foreach ($category as $item)
                     @if ($item->id == $book->category_id)
@@ -33,25 +35,45 @@
                     @endif
                 @endforeach
             </select>
+            <div class="invalid-feedback">
+                {{ $errors->first('category_id') }}
+            </div>
             <br>
             <label for="description">Description</label><br>
-            <textarea name="description" width="300" height="130" id="description">{{ $book->description }}</textarea>
+            <textarea class="form-control {{ $errors->first('description') ? 'is-invalid' : ''}}" name="description" width="300" height="130" id="description" placeholder="Give a description about this book">
+                {{ old('description') ? old('description') : $book->description }}
+            </textarea>
+            <div class="invalid-feedback">
+                {{ $errors->first('description') }}
+            </div>
             <br>
             <label for="stock">Stock</label><br>
-            <input type="number" class="form-control" id="stock" name="stock"
-            min=0 value="{{ $book->stock }}">
+            <input type="number" class="form-control {{ $errors->first('stock') ? 'is-invalid' : ''}}"
+             value="{{ old('stock') ?  old('stock') : $book->stock }}" id="stock" name="stock" min=0 value=0>
+            <div class="invalid-feedback">
+                {{ $errors->first('stock') }}
+            </div>
             <br>
             <label for="author">Author</label><br>
-            <input type="text" class="form-control" name="author" id="author"
-            value="{{ $book->author }}">
+            <input type="text" class="form-control {{ $errors->first('author') ? 'is-invalid' : ''}}" name="author" id="author"
+            placeholder="Book author" value="{{ old('author') ? old('author') : $book->author }}">
+            <div class="invalid-feedback">
+                {{ $errors->first('author') }}
+            </div>
             <br>
             <label for="publisher">Publisher</label> <br>
-            <input type="text" class="form-control" id="publisher"
-            name="publisher" value="{{ $book->publisher }}">
+            <input type="text" class="form-control {{ $errors->first('publisher') ? 'is-invalid' : ''}}" id="publisher"
+            name="publisher" placeholder="Book publisher" value="{{ old('publisher') ? old('publisher') : $book->publisher }}">
+            <div class="invalid-feedback">
+                {{ $errors->first('publisher') }}
+            </div>
             <br>
             <label for="Price">Price</label> <br>
-            <input type="number" class="form-control" name="price" id="price"
-            value="{{ $book->price }}">
+            <input type="number" class="form-control {{ $errors->first('price') ? 'is-invalid' : ''}}" name="price" id="price" value="{{ old('price') ? old('price') : $book->publisher }}"
+            >
+            <div class="invalid-feedback">
+                {{ $errors->first('price') }}
+            </div>
             <br>
             <label for="">Status</label>
             <br>

@@ -8,6 +8,7 @@ use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 class CategoryController extends Controller
 {
     /**
@@ -85,7 +86,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+        Validator::make($request->all(),[
+            'name' => 'required|min:3|max:50',
+            'image' => 'image'
+        ])->validate();
         $categ =  Category::findOrFail($id);
       
         $data =  $request->all();

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Book;
 use App\Category;
+use Validator;
 class BookController extends Controller
 {
     /**
@@ -29,6 +30,7 @@ class BookController extends Controller
      */
     public function create()
     {
+        
         $category = Category::all();
         return view('pages.book.create', compact('category'));
     }
@@ -41,7 +43,16 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        
+        Validator::make($request->all(),[
+            "title" => "required|min:5|max:200",
+            "description" => "required|min:20|max:1000",
+            "author" => "required|min:3|max:100",
+            "category_id" => 'required',
+            "publisher" => "required|min:3|max:200",
+            "price" => "required|digits_between:0,10",
+            "stock" => "required|digits_between:0,10",
+            "cover" => "required|image"
+        ])->validate();
         $data = $request->all();
         $data['slug'] = Str::slug($request->title);
         $data['created_by'] =  Auth::user()->id;
@@ -88,8 +99,16 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Validator::make($request->all(),[
+            "title" => "required|min:5|max:200",
+            "description" => "required|min:20|max:1000",
+            "author" => "required|min:3|max:100",
+            "publisher" => "required|min:3|max:200",
+            "price" => "required|digits_between:0,10",
+            "stock" => "required|digits_between:0,10",
+            "cover" => "image"
+        ])->validate();
         $book = Book::findOrFail($id);
-        
         $data = $request->all();
         $data['slug'] = Str::slug($request->title,'-');
         $data['created_by'] =  Auth::user()->id;
