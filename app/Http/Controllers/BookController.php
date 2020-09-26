@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Book;
 use App\Category;
 use Validator;
+use Illuminate\Support\Facades\Gate;
+
 class BookController extends Controller
 {
     /**
@@ -16,6 +18,13 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware(function($request, $next){
+            if(Gate::allows('manage-books')) return $next($request);
+            abort(403, 'Anda tidak memiliki cukup hak akses');
+        });
+    }
+
     public function index()
     {
         $books = Book::with('category')->paginate(10);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
+use Illuminate\Support\Facades\Gate;
 class OrderController extends Controller
 {
     /**
@@ -11,6 +12,13 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware(function($request, $next){
+            if(Gate::allows('manage-orders')) return $next($request);
+            abort(403, 'Anda tidak memiliki cukup hak akses');
+        });
+    }
+
     public function index()
     {
         $order = Order::with(['user','books'])->paginate(10); 
