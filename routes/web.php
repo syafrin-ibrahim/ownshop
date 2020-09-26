@@ -25,3 +25,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('user','UserController');
 Route::resource('category','CategoryController');
 Route::resource('book','BookController');
+Route::resource('order','OrderController');

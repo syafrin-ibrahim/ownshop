@@ -64,6 +64,7 @@
                         <li><a href="{{ route('user.index') }}"><span class="oi oi-people"></span>User</a></li>
                         <li><a href="{{ route('category.index') }}"><span class="oi oi-people"></span>Category</a></li>
                         <li><a href="{{ route('book.index') }}"><span class="oi oi-people"></span>Books</a></li>
+                        <li><a href="{{ route('order.index') }}"><span class="oi oi-people"></span>Orders</a></li>
                         <div class="d-block d-md-none">
                             <div class="dropdown-divider"></div>
                             <li><a href="#"> Profile</a></li>
