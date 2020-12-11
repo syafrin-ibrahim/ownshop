@@ -1,1 +1,1 @@
-Aplikasi E-commerce pake laravel 7 (ebook laravue) editor moh azamuddin
+Aplikasi E-commerce ebook pake laravel 7  editor moh azamuddin
